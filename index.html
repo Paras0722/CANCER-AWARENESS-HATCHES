@@ -3,9 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>कैंसर जागरूकता पोर्टल — PDF & Video (Hindi)</title>
+  <title>कैंसर जागरूकता पोर्टल | Cancer Awareness Portal</title>
 
-  <!-- PDF.js CDN (to extract text client-side) -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.7.107/pdf.min.js"></script>
 
   <style>
@@ -14,10 +13,8 @@
     body{
       margin:0;
       font-family:"Poppins",sans-serif;
-      background:#fff6f6; /* single soft color as requested */
+      background:#fff6f6;
       color:#222;
-      -webkit-font-smoothing:antialiased;
-      -moz-osx-font-smoothing:grayscale;
     }
     header{
       background:#c62828;
@@ -31,304 +28,161 @@
     main{max-width:1100px;margin:28px auto;padding:0 16px;}
     .intro{
       text-align:center;margin-bottom:22px;
-      padding:18px;background:#fff;border-radius:10px;box-shadow:0 6px 20px rgba(194,24,24,0.06);
+      padding:18px;background:#fff;border-radius:10px;
+      box-shadow:0 6px 20px rgba(194,24,24,0.06);
     }
     .intro h2{color:#b71c1c;margin-bottom:6px}
-    .intro p{margin:0;color:#333}
-
     .choices{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:18px}
     .choice-btn{
       background:#b71c1c;color:#fff;border:none;padding:12px 22px;border-radius:10px;font-size:1rem;
       cursor:pointer;transition:transform .18s ease,box-shadow .18s ease;
     }
     .choice-btn:hover{transform:translateY(-4px);box-shadow:0 10px 25px rgba(183,28,28,0.15);}
-
-    /* Section container */
     .panel{
       display:none;
       margin-top:26px;
-      background:#fff;padding:18px;border-radius:12px;box-shadow:0 8px 30px rgba(0,0,0,0.06)
+      background:#fff;padding:18px;border-radius:12px;
+      box-shadow:0 8px 30px rgba(0,0,0,0.06)
     }
-
-    /* PDF list cards */
     .pdf-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
     .pdf-card{
       border-radius:10px;padding:14px;background:#fff6f6;border:1px solid #ffe6e6;
       text-align:left;cursor:pointer;
     }
     .pdf-card h3{margin:0;color:#b71c1c;font-size:1.05rem}
-    .pdf-card p{margin:8px 0 0;font-size:.92rem;color:#444}
-
-    .viewer{
-      margin-top:18px;
-      display:flex;gap:12px;flex-direction:column;align-items:center;
-    }
-    iframe.pdf-frame{width:100%;height:520px;border-radius:8px;border:1px solid #eee;box-shadow:0 10px 30px rgba(0,0,0,0.06)}
-    .controls{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:12px}
-    .btn{
-      padding:10px 18px;border-radius:8px;border:none;cursor:pointer;font-weight:600;
-    }
-    .btn-tts{background:#2e7d32;color:#fff}
-    .btn-stop{background:#ef5350;color:#fff}
-    .btn-back{background:#9e9e9e;color:#fff}
-
-    /* Video grid */
     .video-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:16px}
     .video-card{background:#fff;padding:12px;border-radius:10px;border:1px solid #f1f1f1}
     .video-card h4{margin:6px 0;color:#b71c1c}
     .video-card iframe{width:100%;height:200px;border-radius:8px;border:none}
-
     footer{margin:36px 0 0;padding:22px;text-align:center;color:#fff;background:#c62828;border-top-left-radius:12px;border-top-right-radius:12px}
-    @media(max-width:600px){ iframe.pdf-frame{height:360px} }
   </style>
 </head>
 
 <body>
   <header>
     <h1>कैंसर जागरूकता पोर्टल</h1>
-    <p>सभी सामग्री हिंदी में — PDF पढ़ें या सुनें; डॉक्टरों द्वारा बताए वीडियो देखें</p>
+    <p>हिंदी और English में जानकारी — PDF पढ़ें या सुनें, वीडियो देखें</p>
   </header>
 
   <main>
     <div class="intro">
-      <h2>जानकारी प्राप्त करें</h2>
-      <p>नीचे चुनें: पीडीएफ (पूरी टेक्स्ट को सुनें) या वीडियो (YouTube)</p>
-
+      <h2>जानकारी प्राप्त करें / Get Information</h2>
       <div class="choices">
         <button class="choice-btn" onclick="openPanel('pdfPanel')">📄 पीडीएफ (PDF)</button>
         <button class="choice-btn" onclick="openPanel('videoPanel')">🎥 वीडियो (Video)</button>
       </div>
     </div>
 
-    <!-- PDF Panel -->
-    <div id="pdfSection" class="section" style="display:none;">
-  <h2>कैंसर की जानकारी (PDF + सुनें)</h2>
-  <div class="pdf-grid">
-    <div class="pdf-item">
-      <h3>स्तन कैंसर (Breast Cancer)</h3>
-      <a href="breast.pdf" target="_blank">📄 PDF खोलें</a>
-      <button onclick="readPdf('breast.pdf')">🔊 सुनें</button>
-    </div>
-    <div class="pdf-item">
-      <h3>फेफड़ों का कैंसर (Lung Cancer)</h3>
-      <a href="lung.pdf" target="_blank">📄 PDF खोलें</a>
-      <button onclick="readPdf('lung.pdf')">🔊 सुनें</button>
-    </div>
-    <div class="pdf-item">
-      <h3>मुख कैंसर (Oral Cancer)</h3>
-      <a href="oral.pdf" target="_blank">📄 PDF खोलें</a>
-      <button onclick="readPdf('oral.pdf')">🔊 सुनें</button>
-    </div>
-    <div class="pdf-item">
-      <h3>त्वचा कैंसर (Skin Cancer)</h3>
-      <a href="skin.pdf" target="_blank">📄 PDF खोलें</a>
-      <button onclick="readPdf('skin.pdf')">🔊 सुनें</button>
-    </div>
-    <div class="pdf-item">
-      <h3>सर्वाइकल कैंसर (Cervical Cancer)</h3>
-      <a href="cervical.pdf" target="_blank">📄 PDF खोलें</a>
-      <button onclick="readPdf('cervical.pdf')">🔊 सुनें</button>
-    </div>
-    <div class="pdf-item">
-      <h3>प्रोस्टेट कैंसर (Prostate Cancer)</h3>
-      <a href="prostate.pdf" target="_blank">📄 PDF खोलें</a>
-      <button onclick="readPdf('prostate.pdf')">🔊 सुनें</button>
-    </div>
-    <div class="pdf-item">
-      <h3>जिगर कैंसर (Liver Cancer)</h3>
-      <a href="liver.pdf" target="_blank">📄 PDF खोलें</a>
-      <button onclick="readPdf('liver.pdf')">🔊 सुनें</button>
-    </div>
-    <div class="pdf-item">
-      <h3>पेट कैंसर (Stomach Cancer)</h3>
-      <a href="stomach.pdf" target="_blank">📄 PDF खोलें</a>
-      <button onclick="readPdf('stomach.pdf')">🔊 सुनें</button>
-    </div>
-    <div class="pdf-item">
-      <h3>गुर्दे का कैंसर (Kidney Cancer)</h3>
-      <a href="kidney.pdf" target="_blank">📄 PDF खोलें</a>
-      <button onclick="readPdf('kidney.pdf')">🔊 सुनें</button>
-    </div>
-    <div class="pdf-item">
-      <h3>अग्नाशय कैंसर (Pancreatic Cancer)</h3>
-      <a href="pancreatic.pdf" target="_blank">📄 PDF खोलें</a>
-      <button onclick="readPdf('pancreatic.pdf')">🔊 सुनें</button>
-    </div>
-  </div>
-</div>
-
-    <!-- Video Panel -->
-    <section id="videoPanel" class="panel">
-      <h3 style="color:#b71c1c;margin:0 0 10px">डॉक्टर/विशेषज्ञ वीडियो (YouTube links)</h3>
-      <div class="video-grid" id="videoGrid">
-        <!-- Video cards added by JS -->
+    <!-- PDF Section -->
+    <section id="pdfPanel" class="panel">
+      <h3 style="color:#b71c1c">कैंसर की जानकारी (PDF + सुनें)</h3>
+      <div class="pdf-grid" id="pdfGrid"></div>
+      <p id="pdfStatus" style="margin-top:10px;color:#444;"></p>
+      <div style="margin-top:10px;text-align:center;">
+        <button id="playTtsBtn" class="choice-btn">🔊 सुनें</button>
+        <button id="stopTtsBtn" class="choice-btn" style="background:#757575;">⏹️ रोकें</button>
       </div>
+      <iframe id="pdfFrame" style="width:100%;height:520px;border:none;margin-top:20px;border-radius:10px;"></iframe>
     </section>
 
+    <!-- Video Section -->
+    <section id="videoPanel" class="panel">
+      <h3 style="color:#b71c1c">डॉक्टर/विशेषज्ञ वीडियो</h3>
+      <div class="video-grid" id="videoGrid"></div>
+    </section>
   </main>
 
   <footer>© 2025 Cancer Awareness Portal — Designed by Paras Sahu</footer>
 
   <script>
-  /*********** Configuration: list of PDFs (filename = actual file in pdf/ folder) ***********/
-  // Use the exact filenames you uploaded. If they have spaces or Hindi chars,
-  // encodeURIComponent() is used when building URLs, so keep the exact filename strings.
-  const pdfFiles = [
-    { key: 'breast', title: 'स्तन कैंसर (Breast Cancer)', filename: 'breast.pdf' },
-    { key: 'lung', title: 'फेफड़ों का कैंसर (Lung Cancer)', filename: 'lung.pdf' },
-    { key: 'oral', title: 'मुख कैंसर (Oral Cancer)', filename: 'oral.pdf' },
-    { key: 'skin', title: 'त्वचा कैंसर (Skin Cancer)', filename: 'skin.pdf' },
-    { key: 'cervical', title: 'सर्वाइकल कैंसर (Cervical Cancer)', filename: 'cervical.pdf' },
-    { key: 'prostate', title: 'प्रोस्टेट कैंसर (Prostate Cancer)', filename: 'prostate.pdf' },
-    { key: 'liver', title: 'जिगर कैंसर (Liver Cancer)', filename: 'liver.pdf' },
-    { key: 'stomach', title: 'पेट का कैंसर (Stomach Cancer)', filename: 'stomach.pdf' },
-    { key: 'kidney', title: 'गुर्दे का कैंसर (Kidney Cancer)', filename: 'kidney.pdf' },
-    { key: 'pancreas', title: 'अग्नाशय कैंसर (Pancreatic Cancer)', filename: 'pancreatic.pdf' }
-  ];
+    const pdfFiles = [
+      { title: 'स्तन कैंसर (Breast Cancer)', filename: 'स्तन कैंसर (Breast Cancer).pdf' },
+      { title: 'फेफड़ों का कैंसर (Lung Cancer)', filename: 'फेफड़ों का कैंसर (Lung Cancer) .pdf' },
+      { title: 'मुख कैंसर (Oral Cancer)', filename: 'मुख कैंसर (Oral Cancer) .pdf' },
+      { title: 'त्वचा कैंसर (Skin Cancer)', filename: 'त्वचा कैंसर (Skin Cancer) .pdf' },
+      { title: 'सर्वाइकल कैंसर (Cervical Cancer)', filename: 'सर्वाइकल कैंसर (Cervical Cancer) .pdf' },
+      { title: 'प्रोस्टेट कैंसर (Prostate Cancer)', filename: 'प्रोस्टेट कैंसर (Prostate Cancer) .pdf' },
+      { title: 'जिगर कैंसर (Liver Cancer)', filename: 'जिगर कैंसर (Liver Cancer) .pdf' },
+      { title: 'पेट का कैंसर (Stomach Cancer)', filename: 'पेट का कैंसर (Stomach Cancer) .pdf' },
+      { title: 'गुर्दे का कैंसर (Kidney Cancer)', filename: 'गुर्दे का कैंसर (Kidney Cancer) .pdf' },
+      { title: 'अग्नाशय कैंसर (Pancreatic Cancer)', filename: 'अग्नाशय कैंसर (Pancreatic Cancer) .pdf' }
+    ];
 
-  /*********** Video list — from the links you provided (I used embed IDs) ***********/
-  const videoList = [
-    { title: 'Cancer Awareness Short (Shorts)', embed: 'KZIdQIlAYdE', note:'Short awareness clip' },
-    { title: 'Lung Cancer — Expert Talk', embed: 'iKI_SiWy1DM' },
-    { title: 'Blood Cancer — Information', embed: '3WE0ORcRBVI' },
-    { title: 'Prostate / Men Health', embed: 'vOp10DU6m90' },
-    { title: 'Liver Cancer — Awareness', embed: 'k3HIsDtvFWE' },
-    { title: 'Cervical Cancer — Info', embed: 'vqQ2-yec-bU' },
-    { title: 'Oral Cancer — ENT/Oncology', embed: 'cUJHdjUPBh4' },
-    { title: 'Skin Cancer — Derm/Onco', embed: 'wMqmKaksbUc' }
-  ];
+    const videoList = [
+      { title: 'Cancer Awareness Short', embed: 'KZIdQIlAYdE' },
+      { title: 'Lung Cancer — Expert Talk', embed: 'iKI_SiWy1DM' },
+      { title: 'Prostate / Men Health', embed: 'vOp10DU6m90' },
+      { title: 'Liver Cancer — Awareness', embed: 'k3HIsDtvFWE' },
+      { title: 'Cervical Cancer — Info', embed: 'vqQ2-yec-bU' },
+      { title: 'Oral Cancer — ENT/Oncology', embed: 'cUJHdjUPBh4' }
+    ];
 
-  // ---------- Utility: build UI ----------
-  const pdfGrid = document.getElementById('pdfGrid');
-  const videoGrid = document.getElementById('videoGrid');
-  const pdfViewer = document.getElementById('pdfViewer');
-  const pdfFrame = document.getElementById('pdfFrame');
-  const pdfStatus = document.getElementById('pdfStatus');
-  const playTtsBtn = document.getElementById('playTtsBtn');
-  const stopTtsBtn = document.getElementById('stopTtsBtn');
+    const pdfGrid = document.getElementById('pdfGrid');
+    const videoGrid = document.getElementById('videoGrid');
+    const pdfFrame = document.getElementById('pdfFrame');
+    const pdfStatus = document.getElementById('pdfStatus');
+    const playTtsBtn = document.getElementById('playTtsBtn');
+    const stopTtsBtn = document.getElementById('stopTtsBtn');
+    let currentPdfText = '';
 
-  // create PDF cards
-  pdfFiles.forEach(item=>{
-    const card = document.createElement('div');
-    card.className='pdf-card';
-    card.innerHTML = `<h3>${item.title}</h3><p>क्लिक करें: PDF देखें और पूरी सूचना सुनें</p>`;
-    card.onclick = ()=> openPDF(item);
-    pdfGrid.appendChild(card);
-  });
-
-  // create video cards
-  videoList.forEach(v=>{
-    const card = document.createElement('div');
-    card.className='video-card';
-    card.innerHTML = `<h4>${v.title}</h4>
-      <iframe src="https://www.youtube.com/embed/${v.embed}" title="${v.title}" allowfullscreen></iframe>`;
-    videoGrid.appendChild(card);
-  });
-
-  // Panel show/hide helpers
-  function openPanel(id){
-    document.querySelectorAll('.panel').forEach(p=>p.style.display='none');
-    document.getElementById(id).style.display='block';
-    window.scrollTo({top:0,behavior:'smooth'});
-  }
-  function closeAllPanels(){ document.querySelectorAll('.panel').forEach(p=>p.style.display='none'); }
-  function hideSections(){ closeAllPanels(); }
-
-  // ---------- PDF viewer + TTS using PDF.js ----------
-  // configure PDF.js worker (CDN)
-  pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.7.107/pdf.worker.min.js';
-
-  let currentPdfText = '';
-  let synthUtterance = null;
-
-  function openPDF(item){
-    // Build file URL; ensure encoding for filenames with spaces/unicode
-    const url = encodeURIComponent(item.filename);
-    pdfFrame.src = url;
-    pdfViewer.style.display='flex';
-    pdfStatus.textContent = 'PDF लोड हो रही है — टेक्स्ट निकालने की प्रक्रिया शुरू...';
-
-    // extract full text from PDF using PDF.js
-    extractTextFromPDF(url).then(text=>{
-      currentPdfText = text.trim();
-      if (!currentPdfText) currentPdfText = item.title + ' — PDF से टेक्स्ट प्राप्त नहीं हुआ।';
-      pdfStatus.textContent = 'PDF टेक्स्ट तैयार है — "🔊 सुनें" बटन दबाएँ।';
-      // activate TTS button
-      playTtsBtn.disabled = false;
-    }).catch(err=>{
-      console.error(err);
-      currentPdfText = item.title + ' — PDF से टेक्स्ट निकालने में त्रुटि हुई।';
-      pdfStatus.textContent = 'PDF टेक्स्ट निकालने में त्रुटि। (Console देखें)';
-      playTtsBtn.disabled = true;
+    pdfFiles.forEach(item => {
+      const div = document.createElement('div');
+      div.className = 'pdf-card';
+      div.innerHTML = `<h3>${item.title}</h3><p>क्लिक करें: PDF देखें और सुनें</p>`;
+      div.onclick = () => openPDF(item.filename, item.title);
+      pdfGrid.appendChild(div);
     });
 
-    // stop any existing speech
-    stopSpeech();
-  }
+    videoList.forEach(v => {
+      const div = document.createElement('div');
+      div.className = 'video-card';
+      div.innerHTML = `<h4>${v.title}</h4><iframe src="https://www.youtube.com/embed/${v.embed}" allowfullscreen></iframe>`;
+      videoGrid.appendChild(div);
+    });
 
-  // extractTextFromPDF: returns concatenated text of all pages
-  async function extractTextFromPDF(url){
-    const loadingTask = pdfjsLib.getDocument(url);
-    const pdf = await loadingTask.promise;
-    let fullText = '';
-
-    for (let pageNo = 1; pageNo <= pdf.numPages; pageNo++){
-      const page = await pdf.getPage(pageNo);
-      const content = await page.getTextContent();
-      const strings = content.items.map(i => i.str);
-      fullText += strings.join(' ') + '\\n\\n';
+    function openPanel(id){
+      document.querySelectorAll('.panel').forEach(p => p.style.display='none');
+      document.getElementById(id).style.display='block';
+      window.scrollTo({top:0,behavior:'smooth'});
     }
-    return fullText;
-  }
 
-  // TTS controls
-  playTtsBtn.addEventListener('click', () => {
-    if (!currentPdfText) return;
-    speakText(currentPdfText);
-  });
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.7.107/pdf.worker.min.js';
 
-  stopTtsBtn.addEventListener('click', ()=> stopSpeech());
-
-  function speakText(text){
-    stopSpeech();
-    synthUtterance = new SpeechSynthesisUtterance(text);
-    // Hindi voice if available
-    synthUtterance.lang = 'hi-IN';
-    synthUtterance.rate = 0.95; // natural speed
-    synthUtterance.pitch = 1.0;
-    window.speechSynthesis.speak(synthUtterance);
-    pdfStatus.textContent = '🏁 पढ़ रहा है... आप "⏹️ रोकें" से रुकवा सकते हैं।';
-  }
-  function stopSpeech(){
-    if (window.speechSynthesis && window.speechSynthesis.speaking){
-      window.speechSynthesis.cancel();
+    async function openPDF(filename, title){
+      const url = encodeURIComponent(filename);
+      pdfFrame.src = url;
+      pdfStatus.textContent = 'PDF लोड हो रही है...';
+      try{
+        const text = await extractTextFromPDF(url);
+        currentPdfText = text || (title + ' — टेक्स्ट नहीं मिला।');
+        pdfStatus.textContent = '🔊 अब "सुनें" बटन दबाएँ';
+      } catch(err){
+        pdfStatus.textContent = 'त्रुटि: PDF लोड नहीं हो सकी।';
+        currentPdfText = '';
+      }
     }
-    synthUtterance = null;
-    pdfStatus.textContent = '';
-  }
 
-  function closePDFViewer(){
-    pdfViewer.style.display='none';
-    pdfFrame.src = '';
-    currentPdfText = '';
-    stopSpeech();
-  }
+    async function extractTextFromPDF(url){
+      const pdf = await pdfjsLib.getDocument(url).promise;
+      let text = '';
+      for(let i=1;i<=pdf.numPages;i++){
+        const page = await pdf.getPage(i);
+        const content = await page.getTextContent();
+        text += content.items.map(it=>it.str).join(' ') + '\n';
+      }
+      return text;
+    }
 
-  // default: disable play button until text available
-  playTtsBtn.disabled = true;
+    function speakText(text){
+      const utter = new SpeechSynthesisUtterance(text);
+      utter.lang = 'hi-IN';
+      utter.rate = 0.95;
+      utter.pitch = 1.0;
+      speechSynthesis.speak(utter);
+    }
 
-  // Accessibility: stop speech when user navigates away
-  window.addEventListener('beforeunload', ()=> stopSpeech());
-// fallback simple TTS (अगर currentPdfText खाली हो)
-function readPdf(pdfFile) {
-  const msg = new SpeechSynthesisUtterance();
-  msg.lang = 'hi-IN';
-  msg.text = "कृपया ध्यान दें — यह सुविधा परीक्षण के लिए है। पूरी पीडीएफ को सुनने की प्रक्रिया शुरू हो रही है।";
-  window.speechSynthesis.speak(msg);
-}
-
+    playTtsBtn.addEventListener('click', ()=>{ if(currentPdfText) speakText(currentPdfText); });
+    stopTtsBtn.addEventListener('click', ()=> speechSynthesis.cancel());
   </script>
 </body>
 </html>
-
-
