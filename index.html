@@ -101,27 +101,61 @@
     </div>
 
     <!-- PDF Panel -->
-    <section id="pdfPanel" class="panel">
-      <h3 style="color:#b71c1c;margin:0 0 10px">पीडीएफ सूची — सभी कैंसर प्रकार</h3>
-
-      <div class="pdf-grid" id="pdfGrid">
-        <!-- Cards created by JS from 'pdfFiles' mapping -->
-      </div>
-
-      <div id="pdfViewer" class="viewer" style="display:none">
-        <div style="width:100%;max-width:980px">
-          <iframe id="pdfFrame" class="pdf-frame" src=""></iframe>
-        </div>
-
-        <div class="controls">
-          <button class="btn btn-tts" id="playTtsBtn">🔊 सुनें (पूरी PDF)</button>
-          <button class="btn btn-stop" id="stopTtsBtn">⏹️ रोकें</button>
-          <button class="btn btn-back" onclick="closePDFViewer()">⬅ वापस</button>
-        </div>
-
-        <p id="pdfStatus" style="margin-top:8px;color:#555;font-size:.95rem"></p>
-      </div>
-    </section>
+    <div id="pdfSection" class="section" style="display:none;">
+  <h2>कैंसर की जानकारी (PDF + सुनें)</h2>
+  <div class="pdf-grid">
+    <div class="pdf-item">
+      <h3>स्तन कैंसर (Breast Cancer)</h3>
+      <a href="breast.pdf" target="_blank">📄 PDF खोलें</a>
+      <button onclick="readPdf('breast.pdf')">🔊 सुनें</button>
+    </div>
+    <div class="pdf-item">
+      <h3>फेफड़ों का कैंसर (Lung Cancer)</h3>
+      <a href="lung.pdf" target="_blank">📄 PDF खोलें</a>
+      <button onclick="readPdf('lung.pdf')">🔊 सुनें</button>
+    </div>
+    <div class="pdf-item">
+      <h3>मुख कैंसर (Oral Cancer)</h3>
+      <a href="oral.pdf" target="_blank">📄 PDF खोलें</a>
+      <button onclick="readPdf('oral.pdf')">🔊 सुनें</button>
+    </div>
+    <div class="pdf-item">
+      <h3>त्वचा कैंसर (Skin Cancer)</h3>
+      <a href="skin.pdf" target="_blank">📄 PDF खोलें</a>
+      <button onclick="readPdf('skin.pdf')">🔊 सुनें</button>
+    </div>
+    <div class="pdf-item">
+      <h3>सर्वाइकल कैंसर (Cervical Cancer)</h3>
+      <a href="cervical.pdf" target="_blank">📄 PDF खोलें</a>
+      <button onclick="readPdf('cervical.pdf')">🔊 सुनें</button>
+    </div>
+    <div class="pdf-item">
+      <h3>प्रोस्टेट कैंसर (Prostate Cancer)</h3>
+      <a href="prostate.pdf" target="_blank">📄 PDF खोलें</a>
+      <button onclick="readPdf('prostate.pdf')">🔊 सुनें</button>
+    </div>
+    <div class="pdf-item">
+      <h3>जिगर कैंसर (Liver Cancer)</h3>
+      <a href="liver.pdf" target="_blank">📄 PDF खोलें</a>
+      <button onclick="readPdf('liver.pdf')">🔊 सुनें</button>
+    </div>
+    <div class="pdf-item">
+      <h3>पेट कैंसर (Stomach Cancer)</h3>
+      <a href="stomach.pdf" target="_blank">📄 PDF खोलें</a>
+      <button onclick="readPdf('stomach.pdf')">🔊 सुनें</button>
+    </div>
+    <div class="pdf-item">
+      <h3>गुर्दे का कैंसर (Kidney Cancer)</h3>
+      <a href="kidney.pdf" target="_blank">📄 PDF खोलें</a>
+      <button onclick="readPdf('kidney.pdf')">🔊 सुनें</button>
+    </div>
+    <div class="pdf-item">
+      <h3>अग्नाशय कैंसर (Pancreatic Cancer)</h3>
+      <a href="pancreatic.pdf" target="_blank">📄 PDF खोलें</a>
+      <button onclick="readPdf('pancreatic.pdf')">🔊 सुनें</button>
+    </div>
+  </div>
+</div>
 
     <!-- Video Panel -->
     <section id="videoPanel" class="panel">
@@ -209,7 +243,7 @@
 
   function openPDF(item){
     // Build file URL; ensure encoding for filenames with spaces/unicode
-    const url = 'pdf/' + encodeURIComponent(item.filename);
+    const url = encodeURIComponent(item.filename);
     pdfFrame.src = url;
     pdfViewer.style.display='flex';
     pdfStatus.textContent = 'PDF लोड हो रही है — टेक्स्ट निकालने की प्रक्रिया शुरू...';
@@ -285,8 +319,16 @@
 
   // Accessibility: stop speech when user navigates away
   window.addEventListener('beforeunload', ()=> stopSpeech());
+// fallback simple TTS (अगर currentPdfText खाली हो)
+function readPdf(pdfFile) {
+  const msg = new SpeechSynthesisUtterance();
+  msg.lang = 'hi-IN';
+  msg.text = "कृपया ध्यान दें — यह सुविधा परीक्षण के लिए है। पूरी पीडीएफ को सुनने की प्रक्रिया शुरू हो रही है।";
+  window.speechSynthesis.speak(msg);
+}
 
   </script>
 </body>
 </html>
+
 
